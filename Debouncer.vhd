@@ -17,7 +17,7 @@ begin
 counter_reset <= ff(0) xor ff(1);
 
 process(clk)
-variable count : integer range 0 to 40000000/100; -- default 50000000/100
+variable count : integer range 0 to 40000000/100; 
 begin
 if clk'event and clk = '1' then
     ff(0) <= button;
