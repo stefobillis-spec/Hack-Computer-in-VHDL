@@ -77,8 +77,15 @@ The design can be ported to another FPGA development board, but the following ma
 * UART pin assignments
 * Reset/button pin assignments
 
-Note: The Arty Z7's onboard USB-UART interface is connected to the Zynq processing system. Because this project does not use the Zynq processing system or Vitis, a separate USB-to-UART adapter is used for the UART interface. The onboard USB-UART is used for 
-programming the FPGA and powering the Arty z7 board.
+Note: The Arty Z7's onboard USB-UART interface is connected to the Zynq processing system. Because this project does not use the Zynq processing system or Vitis, a separate USB-to-UART adapter is used for the UART interface. The onboard USB-UART is used for programming the FPGA and powering the Arty z7 board.
+
+
+Here are two images for reference showing how my hardware was set up.
+
+<img width="1016" height="872" alt="Screenshot 2026-08-15 201849" src="https://github.com/user-attachments/assets/104fbfaf-8ae9-4aaa-97f1-405975b277e0" />
+
+<img width="1140" height="812" alt="Screenshot 2026-08-15 203857" src="https://github.com/user-attachments/assets/9a9b02cb-9bdb-4551-af9f-971fd396302b" />
+
 
 ---
 
