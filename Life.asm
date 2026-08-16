@@ -1,4 +1,56 @@
-
+//
+// Conway's Game of Life in Hack Assembly language -- https://en.wikipedia.org/wiki/Conway's_Game_of_Life
+//
+// (C)2016 Robert Woodhead - trebor@animeigo.com / @madoverlord - Creative Commons Attribution License
+//
+// I am indebted to http://www.conwaylife.com/wiki/Main_Page, the LifeWiki, which is a great resource
+// for finding interesting Life Patterns.
+//
+// Notes on implementation:
+//
+// Game Board: a 64x32 matrix of cells, wrapping around at the edges, so the board is effectively a torus.
+// This maps onto the display screen with each cell taking up 8x8 pixels. The game board is stored as a
+// 66x34 matrix with guard cells around the edges that are used to both simplify the code and implement
+// the wrapping feature.
+//
+// Typical implementations of Life store multiple cells per word and use clever bit-banging techniques
+// to update them in parallel to minimize the number of operations (especially memory fetches on machines
+// where those are expensive). However, the Hack machine architecture is not well suited to these techniques
+// so each cell is implemented as a full word; the sign bit contains the state of the cell in the current
+// generation (so live = 1000 ... 0000 and dead = 0000 ... 0000). In the first pass, each cell has 1 added
+// to it for each live neighbor. Then in a second pass, a table lookup is used to convert the neighbor count
+// into the new value for the cell.
+//
+// The board starts at location 10000. Compressed boards (1 bit per cell) are loaded into RAM from ROM
+// at location 9800, then expanded.
+//
+// Lookup tables for computing the new state of live and dead cells are placed at 9970 and 9980 respectively.
+// Each is 9 elements long (because a cell can have from 0-8 neighbors).
+//
+// A 64 element divide-by-2 table is located at 9700.
+//
+// The board temp buffer (a copy of the board @10000) is stored at starting at 7000; the previous temp buffer
+// is stored at 4500, so we have a level of undo.
+//
+// Boy do I wish the assembler had some simple address arithmetic and symbol definition abilities.
+//
+// Stack: the stack is only used to store return addresses. It grows down from just below the SCREEN
+// location. Function parameters are stored in function local variables before calling, so functions
+// are generally not re-entrant.
+//
+// Keyboard commands:
+//
+// 0-9		Load prestored board (0 = logo board)
+// Space 	Compute Next Generation
+// Return 	Free-run until another key pressed
+// Arrows 	Move editing cursor up/down/right/left
+// Q W E 	8-way cursor movement
+// A   D
+// Z X C
+// ` or S 	Toggle current cell
+// DEL 		Clear board
+// < or ,	Save board in temp buffer (2 levels)
+// > or . 	Restore board from temp buffer (2 levels)
 //
 //Conventions:
 //

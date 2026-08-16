@@ -1,3 +1,7 @@
+-- design_1_wrapper.vhd is for reference only.
+-- This file is not needed to recreate the design.
+-- After recreating the block diagram, regenerate a new design wrapper.
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 library UNISIM;
